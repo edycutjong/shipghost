@@ -7,7 +7,7 @@
   <br/>
 
   [![Live Demo](https://img.shields.io/badge/🚀_Live-Demo-06b6d4?style=for-the-badge)](https://github.com/edycutjong/shipghost)
-  [![Pitch Video](https://img.shields.io/badge/🎬_Pitch-Video-ef4444?style=for-the-badge)](https://youtu.be/dummy-shipghost)
+  [![Pitch Video](https://img.shields.io/badge/🎬_Pitch-Video-ef4444?style=for-the-badge)](https://youtu.be/d-Tq3Fl8agc)
   [![Pitch Deck](https://img.shields.io/badge/📊_Pitch-Deck-f59e0b?style=for-the-badge)](https://edycutjong.github.io/shipghost/public/pitch.html)
   [![Built for Anna AI-Native Hackathon](https://img.shields.io/badge/DoraHacks-Anna_Hackathon-8b5cf6?style=for-the-badge)](https://dorahacks.io/hackathon/2204)
 
