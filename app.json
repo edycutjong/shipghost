@@ -1,0 +1,21 @@
+{
+  "slug": "shipghost",
+  "name": "ShipGhost",
+  "version": "1.2.0",
+  "tagline": "Git PR Ghostwriter with encrypted diff analysis and GPG clearsigning.",
+  "description": "ShipGhost is a secure, AI-native Anna application that analyzes your local git branch history, groups modified files into architectural components, and drafts a professional PR package (Title, Summary, Changes List, Architecture Rationale, and Suggested Inline Comments). Diff payloads are encrypted under a 256-bit AES key before leaving your machine, and final exports are cryptographically clearsigned using local GPG/SSH keys.",
+  "category": "developer-tools",
+  "logo_url": "https://github.com/edycutjong/shipghost/raw/main/docs/icon.svg",
+  "cover_url": "https://github.com/edycutjong/shipghost/raw/main/docs/readme-hero.png",
+  "screenshots": [
+    "https://github.com/edycutjong/shipghost/raw/main/docs/readme.png"
+  ],
+  "homepage_url": "https://github.com/edycutjong/shipghost",
+  "support_url": "https://github.com/edycutjong/shipghost/issues",
+  "privacy_url": "https://github.com/edycutjong/shipghost#privacy",
+  "pricing_model": "free",
+
+  "bundled_executas": {
+    "shipghost": { "path": "./executas/shipghost" }
+  }
+}

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="ShipGhost">
+  <defs>
+    <linearGradient id="sg-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#081018"/>
+      <stop offset="1" stop-color="#0d1430"/>
+    </linearGradient>
+    <radialGradient id="sg-glow" cx="0.5" cy="0.4" r="0.65">
+      <stop offset="0" stop-color="#00e5ff" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sg-body" x1="0.3" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.6" stop-color="#eafdff"/>
+      <stop offset="1" stop-color="#bfeefb"/>
+    </linearGradient>
+    <radialGradient id="sg-belly" cx="0.5" cy="0.85" r="0.55">
+      <stop offset="0" stop-color="#00e5ff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sg-git" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00e5ff"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="sg-pen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7df0ff"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="116" fill="url(#sg-bg)"/>
+  <rect width="512" height="512" rx="116" fill="url(#sg-glow)"/>
+  <circle cx="118" cy="150" r="46" fill="#00e5ff" opacity="0.06"/>
+  <circle cx="404" cy="392" r="60" fill="#6366f1" opacity="0.07"/>
+
+  <!-- grounded shadow (squishes with the bob) -->
+  <ellipse cx="252" cy="432" rx="92" ry="14" fill="#000" opacity="0.28">
+    <animate attributeName="rx" values="92;76;92" dur="4.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.28;0.15;0.28" dur="4.6s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- ghost: float + wobble + squash & stretch -->
+  <g transform="translate(256 300)">
+    <g>
+      <animateTransform attributeName="transform" type="scale" additive="sum" values="1 1;0.965 1.06;1.05 0.95;1 1" keyTimes="0;0.3;0.62;1" dur="4.6s" repeatCount="indefinite" calcMode="spline" keySplines="0.3 0 0.4 1;0.4 0 0.6 1;0.3 0 0.4 1"/>
+      <animateTransform attributeName="transform" type="rotate" additive="sum" values="-2.5 0 0; 2.5 0 0; -2.5 0 0" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" keyTimes="0;0.5;1"/>
+      <g transform="translate(-256 -300)">
+        <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0; 0 -20; 0 0" dur="4.6s" repeatCount="indefinite" calcMode="spline" keySplines="0.3 0 0.4 1;0.4 0 0.6 1" keyTimes="0;0.5;1"/>
+
+        <!-- body -->
+        <path d="M130 268 C130 188 186 128 256 128 C326 128 382 188 382 268 V352 a31.5 25 0 0 1 -63 0 a31.5 25 0 0 1 -63 0 a31.5 25 0 0 1 -63 0 a31.5 25 0 0 1 -63 0 Z" fill="url(#sg-body)"/>
+        <path d="M130 268 C130 188 186 128 256 128 C326 128 382 188 382 268 V352 a31.5 25 0 0 1 -63 0 a31.5 25 0 0 1 -63 0 a31.5 25 0 0 1 -63 0 a31.5 25 0 0 1 -63 0 Z" fill="url(#sg-belly)"/>
+        <ellipse cx="206" cy="196" rx="46" ry="34" fill="#ffffff" opacity="0.55"/>
+
+        <!-- arm + quill -->
+        <g>
+          <path d="M168 322 q-18 6 -22 26" fill="none" stroke="#dff6fc" stroke-width="22" stroke-linecap="round"/>
+          <g transform="rotate(34 196 300)">
+            <rect x="150" y="292" width="150" height="17" rx="8.5" fill="url(#sg-pen)"/>
+            <path d="M300 292 l30 8.5 -30 8.5 z" fill="#e9fbff"/>
+            <path d="M330 297 l8 3.5 -8 3.5 z" fill="#101830"/>
+            <rect x="150" y="292" width="34" height="17" rx="8.5" fill="#6366f1"/>
+          </g>
+          <path d="M362 318 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4z" fill="#7df0ff">
+            <animate attributeName="opacity" values="0;1;0" dur="1.6s" repeatCount="indefinite"/>
+            <animateTransform attributeName="transform" type="scale" additive="sum" values="0.6;1.1;0.6" dur="1.6s" repeatCount="indefinite"/>
+          </path>
+        </g>
+
+        <!-- cheeks -->
+        <circle cx="196" cy="266" r="14" fill="#fb7185" opacity="0.42"/>
+        <circle cx="316" cy="266" r="14" fill="#fb7185" opacity="0.42"/>
+
+        <!-- eyes (glossy, snappy blink) -->
+        <ellipse cx="214" cy="246" rx="15" ry="18.5" fill="#0e1730">
+          <animate attributeName="ry" values="18.5;18.5;2;18.5;18.5" keyTimes="0;0.88;0.92;0.96;1" dur="4.4s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="298" cy="246" rx="15" ry="18.5" fill="#0e1730">
+          <animate attributeName="ry" values="18.5;18.5;2;18.5;18.5" keyTimes="0;0.88;0.92;0.96;1" dur="4.4s" repeatCount="indefinite"/>
+        </ellipse>
+        <circle cx="220" cy="239" r="5.5" fill="#fff"/>
+        <circle cx="304" cy="239" r="5.5" fill="#fff"/>
+        <circle cx="210" cy="252" r="2.6" fill="#7df0ff"/>
+        <circle cx="294" cy="252" r="2.6" fill="#7df0ff"/>
+
+        <!-- happy smile + tongue (little 'oo' on the rise) -->
+        <path d="M236 270 q20 20 40 0" fill="#0e1730" stroke="#0e1730" stroke-width="6" stroke-linejoin="round">
+          <animate attributeName="d" values="M236 270 q20 20 40 0;M236 268 q20 26 40 0;M236 270 q20 20 40 0" keyTimes="0;0.5;1" dur="4.6s" repeatCount="indefinite"/>
+        </path>
+        <path d="M249 279 q7 8 14 0 z" fill="#fb7185"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- animated git-merge badge -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -10; 0 0" dur="4.6s" begin="-0.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" keyTimes="0;0.5;1"/>
+    <path d="M392 120 v36 q0 26 26 26 q26 0 26 26 v36" fill="none" stroke="url(#sg-git)" stroke-width="9" stroke-linecap="round" opacity="0.9"/>
+    <circle cx="392" cy="112" r="14" fill="#0d1430" stroke="url(#sg-git)" stroke-width="9"/>
+    <circle cx="444" cy="288" r="14" fill="#0d1430" stroke="url(#sg-git)" stroke-width="9"><animate attributeName="r" values="14;17;14" dur="2s" repeatCount="indefinite"/></circle>
+    <circle r="7" fill="#7df0ff">
+      <animateMotion dur="2.6s" repeatCount="indefinite" path="M392 120 v36 q0 26 26 26 q26 0 26 26 v36"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="2.6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- twinkles -->
+  <path d="M118 330 l5 13 13 5 -13 5 -5 13 -5 -13 -13 -5 13 -5z" fill="#6366f1"><animate attributeName="opacity" values="0.2;1;0.2" dur="2.5s" repeatCount="indefinite"/></path>
+  <path d="M150 150 l3.5 9 9 3.5 -9 3.5 -3.5 9 -3.5 -9 -9 -3.5 9 -3.5z" fill="#00e5ff"><animate attributeName="opacity" values="0.2;1;0.2" dur="2.5s" begin="0.7s" repeatCount="indefinite"/></path>
+</svg>

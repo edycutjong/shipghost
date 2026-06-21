@@ -1,0 +1,14 @@
+{
+  "name": "shipghost",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Git PR Ghostwriter — Anna App",
+  "scripts": {
+    "dev": "anna-app dev",
+    "validate": "anna-app validate",
+    "test": "uv run --project executas/shipghost --with pytest python -m pytest tests/ -q"
+  },
+  "devDependencies": {
+    "@anna-ai/cli": "latest"
+  }
+}

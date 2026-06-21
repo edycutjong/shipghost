@@ -1,0 +1,870 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  --bg-base: #080c14;
+  --bg-surface: rgba(13, 20, 35, 0.65);
+  --bg-surface-hover: rgba(22, 32, 54, 0.85);
+  --border-color: rgba(255, 255, 255, 0.06);
+  --border-color-hover: rgba(255, 255, 255, 0.12);
+
+  --primary: #00e5ff;
+  --primary-rgb: 0, 229, 255;
+  --primary-glow: rgba(0, 229, 255, 0.15);
+  
+  --accent: #6366f1;
+  --accent-rgb: 99, 102, 241;
+  --accent-glow: rgba(99, 102, 241, 0.2);
+
+  --status-success: #10b981;
+  --status-warning: #f59e0b;
+  --status-error: #ef4444;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-base);
+  color: #e2e8f0;
+  font-family: var(--font-sans);
+  overflow: hidden;
+}
+
+/* Background system */
+.bg-decor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: 
+    radial-gradient(circle at 80% 10%, rgba(var(--primary-rgb), 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(var(--accent-rgb), 0.08) 0%, transparent 50%),
+    var(--bg-base);
+}
+
+.grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -9;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Layout System */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(8, 12, 20, 0.8);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-svg {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--status-success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--status-success);
+}
+
+/* Main Workspace */
+.workspace {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Navigation tabs */
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(8, 12, 20, 0.4);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  background: rgba(0, 229, 255, 0.05);
+  border-color: rgba(0, 229, 255, 0.15);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.05);
+}
+
+/* Content Views */
+.view {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.view.active {
+  display: flex;
+}
+
+/* View: Input & Config */
+.input-view-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.config-card {
+  width: 480px;
+  padding: 32px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  transition: border-color var(--transition-fast);
+}
+
+.form-group input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #000;
+  font-weight: 700;
+  border: none;
+  padding: 14px;
+  font-size: 15px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Loading & Analysis Screen */
+.loading-view {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.spinner {
+  width: 64px;
+  height: 64px;
+  border: 4px solid rgba(255,255,255,0.05);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.log-terminal {
+  width: 500px;
+  height: 180px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+/* Review Desks */
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.left-panel {
+  width: 65%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  padding: 24px;
+  gap: 24px;
+}
+
+.right-panel {
+  width: 35%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(5, 8, 15, 0.4);
+}
+
+/* PR Editor Inputs */
+.pr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pr-field label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1px;
+}
+
+.pr-field input, .pr-field textarea {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: var(--font-sans);
+}
+
+.pr-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.pr-field textarea.code-font {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* Commit lists & suggestions */
+.commit-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  margin-bottom: 12px;
+}
+
+.commit-diff-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.commit-bad {
+  color: var(--status-error);
+  text-decoration: line-through;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.commit-good {
+  color: var(--status-success);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Interactive Agent Chat */
+.chat-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.chat-timeline {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.chat-msg.agent {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  align-self: flex-start;
+}
+
+.chat-msg.user {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  align-self: flex-end;
+}
+
+.chat-input-area {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 12px;
+}
+
+.chat-input-area input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+
+.chat-input-area button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* GPG Signature block styling */
+.signature-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px dashed var(--primary);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.7);
+  overflow-x: auto;
+}
+
+/* Toast message notification */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0d121f;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  color: #fff;
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   WOW FACTOR — Premium Micro-Animations & Visual Polish
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 1. Floating Background Orbs */
+.bg-decor {
+  animation: bgFloat 25s ease-in-out infinite alternate;
+}
+
+@keyframes bgFloat {
+  0% { background-position: 80% 10%, 15% 85%; }
+  50% { background-position: 75% 15%, 20% 80%; }
+  100% { background-position: 85% 8%, 12% 88%; }
+}
+
+.bg-decor::after {
+  content: '';
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(var(--primary-rgb), 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 30%;
+  left: 50%;
+  animation: floatOrb 18s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-80px, 50px) scale(1.15); }
+  66% { transform: translate(40px, -60px) scale(0.9); }
+  100% { transform: translate(-30px, 30px) scale(1.05); }
+}
+
+/* 2. Primary Button Light Sweep */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+}
+
+.btn-primary:hover::after {
+  animation: btnSweep 0.7s ease forwards;
+}
+
+@keyframes btnSweep {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* 3. Config Card Border Shimmer */
+.config-card {
+  position: relative;
+}
+
+.config-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -50%;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, transparent 40%, var(--primary) 50%, transparent 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.config-card:hover::after {
+  opacity: 0.6;
+  animation: cardShimmer 2s linear infinite;
+}
+
+@keyframes cardShimmer {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(50%); }
+}
+
+/* 4. Tab Button Active Glow Underline */
+.tab-btn.active {
+  position: relative;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px var(--primary-glow);
+  animation: tabGlow 2s ease-in-out infinite;
+}
+
+@keyframes tabGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* 5. Chat Message Slide-In */
+.chat-msg {
+  animation: chatSlide 0.35s ease-out both;
+}
+
+@keyframes chatSlide {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 6. Commit Item Cascade Entrance */
+.commit-item {
+  animation: commitSlide 0.4s ease both;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.commit-item:nth-child(1) { animation-delay: 0.0s; }
+.commit-item:nth-child(2) { animation-delay: 0.08s; }
+.commit-item:nth-child(3) { animation-delay: 0.16s; }
+.commit-item:nth-child(4) { animation-delay: 0.24s; }
+.commit-item:nth-child(5) { animation-delay: 0.32s; }
+.commit-item:nth-child(6) { animation-delay: 0.40s; }
+
+.commit-item:hover {
+  border-color: var(--border-color-hover);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+@keyframes commitSlide {
+  0% { opacity: 0; transform: translateX(-12px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* 7. Toast Spring Animation */
+.toast.show {
+  animation: toastSpring 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes toastSpring {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 8. Logo SVG Breathing Glow */
+.logo-svg {
+  animation: logoBreathe 4s ease-in-out infinite;
+}
+
+@keyframes logoBreathe {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(var(--primary-rgb), 0.2)); }
+  50% { filter: drop-shadow(0 0 12px rgba(var(--primary-rgb), 0.5)); }
+}
+
+/* 9. GPG Signature Border Glow */
+.signature-box {
+  animation: sigGlow 3s ease-in-out infinite;
+}
+
+@keyframes sigGlow {
+  0%, 100% { border-color: rgba(var(--primary-rgb), 0.3); }
+  50% { border-color: rgba(var(--primary-rgb), 0.6); box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.1); }
+}
+
+/* 10. Pulse Dot Breathing */
+.pulse-dot {
+  animation: pulseBreathe 2s ease-in-out infinite;
+}
+
+@keyframes pulseBreathe {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 12. Selection Color */
+::selection {
+  background: rgba(var(--primary-rgb), 0.3);
+  color: #ffffff;
+}
+
+/* ─── Anna Developer Console Styles ─────────────────────────────────── */
+.console-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  height: calc(100vh - 180px);
+  min-height: 550px;
+  margin-top: 12px;
+}
+
+.console-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.console-right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.console-log-box {
+  flex-grow: 1;
+  background: #050505;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 16px;
+  overflow-y: auto;
+  color: #38bdf8;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+.log-entry {
+  margin-bottom: 8px;
+  border-bottom: 1px dashed rgba(255,255,255,0.05);
+  padding-bottom: 8px;
+}
+
+.log-time {
+  color: rgba(255, 255, 255, 0.4);
+  margin-right: 8px;
+}
+
+.log-method {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.log-params {
+  color: rgba(255, 255, 255, 0.7);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 4px;
+}
+
+.log-result {
+  color: var(--status-success);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 2px;
+}
+
+.log-error {
+  color: var(--status-error);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 2px;
+}
+
+.console-card {
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.console-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.console-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.console-textarea {
+  width: 100%;
+  height: 60px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  resize: none;
+  margin-bottom: 8px;
+}
+
+.btn {
+  width: auto;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: #fff;
+}
+
+.btn-warning {
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid #f59e0b;
+  color: #f59e0b;
+}
+
+.btn-error {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+}
+
+.btn-success {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid #10b981;
+  color: #10b981;
+}
+
+

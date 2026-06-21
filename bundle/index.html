@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ShipGhost — Git PR Ghostwriter. Automated AES-GCM-256 encrypted branch diff analysis, GPG clearsigning, and conventional commit message cleanup.">
+  <title>ShipGhost — Git PR Ghostwriter</title>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <meta name="theme-color" content="#00e5ff">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-decor"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="logo-section">
+        <!-- Simplified embedded SVG matching icon.svg -->
+        <svg class="logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="256" cy="256" r="230" stroke="#00e5ff" stroke-width="24"/>
+          <path d="M 160 160 L 352 160 L 256 352 Z" fill="#6366f1" opacity="0.8"/>
+        </svg>
+        <span class="logo-text">ShipGhost</span>
+      </div>
+      <div style="display: flex; gap: 8px; margin-left: auto; margin-right: 16px;">
+        <button id="nav-workspace-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; font-family: var(--font-mono); border-color: var(--primary);">📂 Workspace</button>
+        <button id="nav-anna-console-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; font-family: var(--font-mono); border-color: var(--accent); color: var(--text-hi);">🎮 Anna Console</button>
+      </div>
+
+      <div class="header-status">
+        <div class="pulse-dot"></div>
+        <span>ANNA SECURE DESK</span>
+      </div>
+    </header>
+
+    <!-- Workspace -->
+    <div class="workspace">
+      
+      <!-- SCREEN 1: CONFIG INPUT -->
+      <div id="screen-input" class="view active">
+        <div class="input-view-container">
+          <div class="config-card">
+            <h2 style="margin-top: 0; font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 24px;" class="logo-text">Start New Ghostwriting</h2>
+            <div class="form-group">
+              <label for="input-repo-path">Repository directory path</label>
+              <input type="text" id="input-repo-path" value="." placeholder=".">
+            </div>
+            <div class="form-group">
+              <label for="input-base-branch">Base comparison branch</label>
+              <input type="text" id="input-base-branch" value="main" placeholder="main">
+            </div>
+            <button id="btn-start-analysis" class="btn-primary">Initiate Diffs Analysis</button>
+            <div style="text-align: center; margin-top: 16px;">
+              <button id="btn-load-sample" style="background: transparent; border: none; color: var(--primary); font-family: var(--font-mono); font-size: 11px; cursor: pointer; text-decoration: underline;">Load Sample Messy Branch fixtures</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: ANALYZING -->
+      <div id="screen-analyzing" class="view loading-view">
+        <div class="spinner"></div>
+        <div id="loading-status-text" class="loading-text">Extracting local git changes...</div>
+        <div class="log-terminal" id="log-console">
+          [executa] waiting for process...
+        </div>
+      </div>
+
+      <!-- SCREEN 3: DASHBOARD WORKSPACE -->
+      <div id="screen-dashboard" class="view">
+        <div class="dashboard-layout">
+          
+          <!-- LEFT REVIEW PANEL -->
+          <div class="left-panel">
+            <!-- Tab selector -->
+            <div class="tab-bar">
+              <button id="tab-pr-desc" class="tab-btn active">PR Description</button>
+              <button id="tab-inline-comments" class="tab-btn">Suggested Comments</button>
+              <button id="tab-commit-cleanup" class="tab-btn">Commit Message Cleaner</button>
+            </div>
+
+            <!-- Tab 1: PR Description Editor -->
+            <div id="tab-content-pr" class="tab-pane-content" style="display: flex; flex-direction: column; gap: 20px;">
+              <div class="pr-field">
+                <label for="pr-title">PR Title (Conventional Commit Format)</label>
+                <input type="text" id="pr-title" value="">
+              </div>
+              <div class="pr-field">
+                <label for="pr-summary">High-Level Narrative Summary</label>
+                <textarea id="pr-summary"></textarea>
+              </div>
+              <div class="pr-field">
+                <label for="pr-changes">Changes List</label>
+                <textarea id="pr-changes" style="min-height: 100px;"></textarea>
+              </div>
+              <div class="pr-field">
+                <label for="pr-rationale">Architecture Rationale</label>
+                <textarea id="pr-rationale" style="min-height: 80px;"></textarea>
+              </div>
+              <div class="pr-field">
+                <label for="pr-testing">Testing Notes</label>
+                <textarea id="pr-testing" style="min-height: 80px;"></textarea>
+              </div>
+              
+              <!-- Action Buttons -->
+              <div style="display: flex; gap: 16px; margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                <button id="btn-sign-gpg" class="btn-primary" style="flex: 1; background: rgba(0,229,255,0.1); border: 1px solid var(--primary); color: var(--primary);">Clearsign with GPG/SSH Key</button>
+                <button id="btn-export-r2" class="btn-primary" style="flex: 1;">Publish PR Bundle to R2</button>
+              </div>
+
+              <!-- GPG Box -->
+              <div id="gpg-signature-container" style="display: none; flex-direction: column; gap: 8px;">
+                <label style="font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 1px;">Cryptographic Clearing Signature</label>
+                <pre id="gpg-signature-block" class="signature-box"></pre>
+              </div>
+            </div>
+
+            <!-- Tab 2: Inline Comments Inspector -->
+            <div id="tab-content-comments" class="tab-pane-content" style="display: none; flex-direction: column; gap: 16px;">
+              <p style="font-size: 13px; color: rgba(255,255,255,0.5); margin: 0 0 12px 0;">AI identified these non-obvious files/lines where review comments can explain engineering decisions:</p>
+              <div id="inline-comments-list" style="display: flex; flex-direction: column; gap: 16px;">
+                <!-- Comments pop here -->
+              </div>
+            </div>
+
+            <!-- Tab 3: Commit Message Cleaner -->
+            <div id="tab-content-commits" class="tab-pane-content" style="display: none; flex-direction: column; gap: 16px;">
+              <p style="font-size: 13px; color: rgba(255,255,255,0.5); margin: 0 0 12px 0;">Transforms messy commit history into clean conventional format. Select rewrites to include in final bundle:</p>
+              <div id="commit-rewrites-list" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Commits list pops here -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT AGENT CHAT PANEL -->
+          <div class="right-panel">
+            <div class="chat-header">
+              <div class="chat-avatar">RE</div>
+              <div>
+                <div style="font-weight: 700; font-size: 14px;">Release Engineer Agent</div>
+                <div style="font-size: 11px; color: var(--primary);">Timeline Session Active</div>
+              </div>
+            </div>
+            
+            <div class="chat-timeline" id="chat-timeline">
+              <div class="chat-msg agent">
+                Hello! I am your interactive Release Engineer agent. You can ask me to explain specific files, clarify architectural patterns used, or ask for modifications to the PR description.
+              </div>
+            </div>
+
+            <div class="chat-input-area">
+              <input type="text" id="chat-input-box" placeholder="Ask about the changes or edit commands...">
+              <button id="btn-chat-send">Send</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SCREEN 4: ANNA DEVELOPER CONSOLE -->
+      <div id="screen-console" class="view" style="padding: 24px; overflow-y: auto;">
+        <div style="margin:0 0 16px;padding:12px 16px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.03);font-size:12px;line-height:1.55;color:#9aa7b8;">
+          <strong style="color:#e6edf3;">🛠️ Developer Console</strong> — a live playground that exercises the Anna Host-API surface (tools · storage · chat · agent sessions · image · upload). Inside the Anna host these route to the <strong style="color:#e6edf3;">real platform</strong>; running <strong style="color:#e6edf3;">standalone</strong> (see badge), calls return clearly-labeled <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:4px;">mock</code> responses so you can preview the flow without an account.
+        </div>
+        <div class="console-layout">
+          <!-- Left: SDK Capabilities Sandbox -->
+          <div class="console-left">
+            
+            <!-- 1. Agent Sessions Controller -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-mono); font-size: 14px; margin-top: 0; color: var(--accent);">1. Agent Sessions (L2 multi-turn)</h3>
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">Session Label</label>
+                  <input type="text" id="sdk-agent-label" class="console-input" value="ShipGhost Sandbox Session">
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">TTL Seconds</label>
+                  <input type="number" id="sdk-agent-ttl" class="console-input" value="600">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <button id="sdk-agent-create" class="btn btn-primary" style="font-size: 11px; padding: 6px 10px;">Create</button>
+                <button id="sdk-agent-run" class="btn" style="font-size: 11px; padding: 6px 10px;" disabled>Run Turn</button>
+                <button id="sdk-agent-cancel" class="btn btn-warning" style="font-size: 11px; padding: 6px 10px;" disabled>Cancel</button>
+                <button id="sdk-agent-history" class="btn" style="font-size: 11px; padding: 6px 10px;" disabled>History</button>
+                <button id="sdk-agent-refresh" class="btn" style="font-size: 11px; padding: 6px 10px;" disabled>Refresh TTL</button>
+                <button id="sdk-agent-list" class="btn" style="font-size: 11px; padding: 6px 10px;">List</button>
+                <button id="sdk-agent-delete" class="btn btn-error" style="font-size: 11px; padding: 6px 10px;" disabled>Delete</button>
+              </div>
+              <div id="sdk-agent-chat-area" style="display: none; margin-top: 8px; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px; background: rgba(0,0,0,0.2);">
+                <div id="sdk-agent-messages" style="height: 120px; overflow-y: auto; font-size: 12px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 4px;"></div>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="sdk-agent-input" class="console-input" style="margin-bottom: 0;" placeholder="Prompt the session agent...">
+                  <button id="sdk-agent-send" class="btn btn-primary" style="font-size: 11px; padding: 6px 12px;">Send</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. AI Media & Vision Studio -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-mono); font-size: 14px; margin-top: 0; color: var(--primary);">2. AI Image Generator & Editor</h3>
+              <input type="text" id="sdk-image-prompt" class="console-input" value="Conventional commit logs visual representation, git branch network visualization">
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">Size</label>
+                  <select id="sdk-image-size" class="console-input" style="background: #000; border: 1px solid var(--border-color); color: #fff;">
+                    <option value="1024x1024">1024x1024</option>
+                    <option value="512x512">512x512</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">Image URL (for Edit)</label>
+                  <input type="text" id="sdk-image-url" class="console-input" placeholder="Optional: Edit URL">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <button id="sdk-image-generate" class="btn btn-primary" style="font-size: 11px; padding: 6px 10px;">Generate Image</button>
+                <button id="sdk-image-edit" class="btn" style="font-size: 11px; padding: 6px 10px;">Edit Image (Inpaint)</button>
+              </div>
+              <div id="sdk-image-result" style="display: none; text-align: center; margin-top: 8px;">
+                <img id="sdk-image-img" style="max-width: 100%; max-height: 150px; border-radius: var(--radius-md); border: 1px solid var(--primary);" src="" alt="SDK Visual">
+              </div>
+            </div>
+
+            <!-- 3. Embeddings & Semantic Similarity -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-mono); font-size: 14px; margin-top: 0; color: #38bdf8;">3. LLM Embeddings & Complete</h3>
+              <textarea id="sdk-embed-text" class="console-textarea" placeholder="Enter text to embed or pass to LLM complete..."></textarea>
+              <div style="display: flex; gap: 8px;">
+                <button id="sdk-embed-btn" class="btn" style="font-size: 11px; padding: 6px 10px;">Embed Text</button>
+                <button id="sdk-complete-btn" class="btn btn-primary" style="font-size: 11px; padding: 6px 10px;">LLM Complete</button>
+              </div>
+              <div id="sdk-embed-result" style="display: none; font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 8px; white-space: pre-wrap; word-break: break-all; max-height: 80px; overflow-y: auto;"></div>
+            </div>
+
+            <!-- 4. Durable File Vault & KV Store -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-mono); font-size: 14px; margin-top: 0; color: var(--status-success);">4. APS Durable Storage & Uploads</h3>
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">KV Key</label>
+                  <input type="text" id="sdk-kv-key" class="console-input" value="shipghost_setting">
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">KV Value</label>
+                  <input type="text" id="sdk-kv-val" class="console-input" value="active">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <button id="sdk-kv-get" class="btn" style="font-size: 11px; padding: 6px 10px;">KV Get</button>
+                <button id="sdk-kv-set" class="btn btn-success" style="font-size: 11px; padding: 6px 10px;">KV Set</button>
+                <button id="sdk-kv-delete" class="btn btn-error" style="font-size: 11px; padding: 6px 10px;">KV Delete</button>
+                <button id="sdk-kv-list" class="btn" style="font-size: 11px; padding: 6px 10px;">KV List Prefix</button>
+              </div>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 8px; margin-top: 8px;">
+                <label style="font-size: 11px; color: rgba(255,255,255,0.6);">Negotiated Upload File</label>
+                <input type="file" id="sdk-upload-file" class="console-input">
+                <button id="sdk-upload-btn" class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; width: 100%; justify-content: center;">Start Negotiated Upload</button>
+              </div>
+            </div>
+
+            <!-- 5. Egress & Window Controls -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-mono); font-size: 14px; margin-top: 0; color: #f59e0b;">5. Window, Tools List & Chat Egress</h3>
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">Window Title</label>
+                  <input type="text" id="sdk-win-title" class="console-input" value="ShipGhost Pro">
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: rgba(255,255,255,0.6);">View Name</label>
+                  <input type="text" id="sdk-win-view" class="console-input" value="dashboard">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <button id="sdk-win-title-btn" class="btn" style="font-size: 11px; padding: 6px 10px;">Set Title</button>
+                <button id="sdk-win-open-btn" class="btn" style="font-size: 11px; padding: 6px 10px;">Open View</button>
+                <button id="sdk-win-close-btn" class="btn btn-error" style="font-size: 11px; padding: 6px 10px;">Close Window</button>
+                <button id="sdk-tools-list-btn" class="btn" style="font-size: 11px; padding: 6px 10px;">List Executa Tools</button>
+              </div>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 8px; margin-top: 8px;">
+                <input type="text" id="sdk-chat-msg" class="console-input" value="ShipGhost PR clearsign and export completed.">
+                <div style="display: flex; gap: 8px;">
+                  <button id="sdk-chat-msg-btn" class="btn" style="font-size: 11px; padding: 6px 10px; flex-grow: 1; justify-content: center;">Write to Chat</button>
+                  <button id="sdk-chat-artifact-btn" class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; flex-grow: 1; justify-content: center;">Append Artifact</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Running SDK Log & Terminal -->
+          <div class="console-right">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-mono); font-size: 14px; margin: 0; color: var(--primary);">Live SDK Event Stream</h3>
+              <button id="console-clear-logs" class="btn btn-secondary" style="font-size: 11px; padding: 4px 8px;">Clear Logs</button>
+            </div>
+            <div id="sdk-log-box" class="console-log-box">
+              <div class="log-entry">
+                <span class="log-time">[00:00:00]</span>
+                <span class="log-method">SYSTEM</span>: Console initialized. Awaiting API triggers...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Toast -->
+  <div class="toast" id="toast-banner">Analysis complete!</div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

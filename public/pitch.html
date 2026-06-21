@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShipGhost — Pitch Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;background:#070e16;}
+    .font-display{font-family:'Fredoka',sans-serif;}
+    .mono{font-family:'JetBrains Mono',monospace;}
+    .slide{display:none;animation:fade .45s ease;}
+    .slide.active{display:flex;}
+    @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+    .floaty{animation:floaty 4.6s ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+    .tw{animation:twinkle 2.5s ease-in-out infinite}
+    .glow{background:radial-gradient(60% 60% at 30% 40%, rgba(0,229,255,.16), transparent 70%);}
+    .dotgrid{background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;}
+    .chip{display:inline-flex;align-items:center;justify-content:center;}
+  </style>
+</head>
+<body class="text-slate-100 h-full overflow-hidden flex flex-col">
+  <div class="flex-1 relative dotgrid">
+    <div class="absolute inset-0 glow pointer-events-none"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-8 md:p-14">
+
+      <!-- 1 TITLE -->
+      <section class="slide active max-w-6xl w-full flex-col md:flex-row items-center gap-12">
+        <div class="flex-1 flex flex-col items-start">
+          <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-5">Anna AI-Native 2026 · Developer Tools</span>
+          <h1 class="font-display text-6xl md:text-7xl font-bold leading-none mb-5 flex items-center gap-4">ShipGhost <i data-lucide="ghost" class="w-12 h-12 text-[#00e5ff]"></i></h1>
+          <p class="text-xl text-slate-300 max-w-md mb-7">Twenty messy commits → <span class="text-[#7df0ff] font-semibold">one clean PR</span>. Your friendly release-engineering ghost.</p>
+          <div class="flex flex-wrap gap-2 mono text-xs">
+            <span class="px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30 text-[#7df0ff]">Anna App · schema 2</span>
+            <span class="px-3 py-1.5 rounded-full bg-[#6366f1]/10 border border-[#6366f1]/30 text-[#c0c2fb]">AES-GCM-256</span>
+            <span class="px-3 py-1.5 rounded-full bg-slate-400/10 border border-slate-500/30 text-slate-300">GPG clearsign</span>
+          </div>
+        </div>
+        <div class="flex-1 flex justify-center relative">
+          <div class="tw absolute top-4 left-10 text-2xl text-[#8b8cf9]">✦</div>
+          <div class="tw absolute bottom-6 right-12 text-xl text-[#7df0ff]" style="animation-delay:.9s">✦</div>
+          <img src="icon.svg" alt="ShipGhost mascot" class="floaty w-64 h-64 md:w-80 md:h-80 drop-shadow-2xl">
+        </div>
+      </section>
+
+      <!-- 2 PROBLEM -->
+      <section class="slide max-w-5xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 02 // The Problem</span>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold mb-6">PR knowledge debt</h2>
+        <p class="text-slate-300 text-lg max-w-3xl leading-relaxed mb-8">After a long sprint your <span class="mono text-white">git log</span> is twenty commits of <span class="mono text-[#7df0ff]">wip</span>, <span class="mono text-[#7df0ff]">fix</span>, <span class="mono text-[#7df0ff]">stuff</span>. Writing clean conventional commits and a real PR summary is tedious — so most devs skip it.</p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><span class="chip w-11 h-11 rounded-xl bg-[#00e5ff]/10 border border-[#00e5ff]/25 mb-3"><i data-lucide="trending-down" class="w-5 h-5 text-[#7df0ff]"></i></span><div class="font-semibold mb-1">Lost context</div><div class="text-slate-400 text-sm">Reviewers can't tell what changed or why.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><span class="chip w-11 h-11 rounded-xl bg-[#00e5ff]/10 border border-[#00e5ff]/25 mb-3"><i data-lucide="hourglass" class="w-5 h-5 text-[#7df0ff]"></i></span><div class="font-semibold mb-1">Tedious busywork</div><div class="text-slate-400 text-sm">Summaries + conventional commits eat the end of every sprint.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><span class="chip w-11 h-11 rounded-xl bg-[#6366f1]/10 border border-[#6366f1]/25 mb-3"><i data-lucide="lock" class="w-5 h-5 text-[#c0c2fb]"></i></span><div class="font-semibold mb-1">AI helpers leak code</div><div class="text-slate-400 text-sm">They ship raw, proprietary diffs in plaintext to cloud LLMs.</div></div>
+        </div>
+      </section>
+
+      <!-- 3 SOLUTION -->
+      <section class="slide max-w-5xl w-full flex-col md:flex-row items-center gap-10">
+        <div class="flex-1">
+          <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4 block">Slide 03 // The Solution</span>
+          <h2 class="font-display text-4xl md:text-5xl font-semibold mb-6">A local AI release engineer</h2>
+          <ul class="space-y-4 text-slate-300">
+            <li class="flex gap-3"><span class="text-[#00e5ff] text-xl">①</span><span><b class="text-white">Reads your branch</b> with real <span class="mono">git diff</span>/<span class="mono">git log</span> — locally.</span></li>
+            <li class="flex gap-3"><span class="text-[#00e5ff] text-xl">②</span><span><b class="text-white">Ghostwrites the PR</b> — title, summary, rationale, inline comments — and cleans commit messages.</span></li>
+            <li class="flex gap-3"><span class="text-[#00e5ff] text-xl">③</span><span><b class="text-white">You review &amp; sign</b> — GPG/SSH clearsign proves a human approved it.</span></li>
+          </ul>
+          <p class="mt-6 text-sm text-[#c0c2fb]/90 flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i> Diffs are AES-GCM-256 enveloped before the LLM ever sees them — source IP stays on your machine.</p>
+        </div>
+        <div class="flex-1 flex justify-center"><img src="icon.svg" class="floaty w-56 h-56" alt=""></div>
+      </section>
+
+      <!-- 4 FLOW -->
+      <section class="slide max-w-6xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 04 // Core Product Flow</span>
+        <h2 class="font-display text-4xl font-semibold mb-8">Analyze → Ghostwrite → Clean → Sign</h2>
+        <div class="flex flex-col md:flex-row items-stretch gap-3 mono text-sm">
+          <div class="flex-1 rounded-2xl bg-[#00e5ff]/[0.06] border border-[#00e5ff]/30 p-5"><span class="chip w-9 h-9 rounded-lg bg-[#00e5ff]/10 border border-[#00e5ff]/25 mb-2"><i data-lucide="git-branch" class="w-4 h-4 text-[#7df0ff]"></i></span><div>git.analyze</div><div class="text-slate-400 text-xs mt-1">diff + log subprocess</div></div>
+          <div class="self-center text-[#00e5ff] text-2xl">➜</div>
+          <div class="flex-1 rounded-2xl bg-[#00e5ff]/[0.06] border border-[#00e5ff]/30 p-5"><span class="chip w-9 h-9 rounded-lg bg-[#00e5ff]/10 border border-[#00e5ff]/25 mb-2"><i data-lucide="bot" class="w-4 h-4 text-[#7df0ff]"></i></span><div>pr.ghostwrite</div><div class="text-slate-400 text-xs mt-1">LLM PR package</div></div>
+          <div class="self-center text-[#00e5ff] text-2xl">➜</div>
+          <div class="flex-1 rounded-2xl bg-[#6366f1]/[0.08] border border-[#6366f1]/30 p-5"><span class="chip w-9 h-9 rounded-lg bg-[#6366f1]/10 border border-[#6366f1]/25 mb-2"><i data-lucide="wand-sparkles" class="w-4 h-4 text-[#c0c2fb]"></i></span><div>commits.cleanup</div><div class="text-slate-400 text-xs mt-1">conventional commits</div></div>
+          <div class="self-center text-[#00e5ff] text-2xl">➜</div>
+          <div class="flex-1 rounded-2xl bg-[#6366f1]/[0.08] border border-[#6366f1]/30 p-5"><span class="chip w-9 h-9 rounded-lg bg-[#6366f1]/10 border border-[#6366f1]/25 mb-2"><i data-lucide="shield-check" class="w-4 h-4 text-[#c0c2fb]"></i></span><div>pr.sign</div><div class="text-slate-400 text-xs mt-1">GPG clearsign → R2</div></div>
+        </div>
+        <p class="mt-6 text-slate-400 text-sm">Draft history persisted to <span class="text-[#7df0ff]">Anna APS KV</span> (last 50 PRs).</p>
+      </section>
+
+      <!-- 5 ARCHITECTURE -->
+      <section class="slide max-w-5xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 05 // Technical Architecture</span>
+        <h2 class="font-display text-4xl font-semibold mb-8">Secure, native Anna app</h2>
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><div class="font-display text-lg text-[#7df0ff] mb-3 flex items-center gap-2"><i data-lucide="app-window" class="w-5 h-5"></i> App UI (iframe)</div><ul class="space-y-1.5 text-slate-300"><li>3 views: <span class="mono text-[#7df0ff]">main</span> · <span class="mono text-[#7df0ff]">inline_inspector</span> · <span class="mono text-[#7df0ff]">commit_cleaner</span></li><li><span class="mono text-[#7df0ff]">tools.invoke</span> → real Executa calls</li><li><span class="mono text-[#7df0ff]">chat.append_artifact</span> PR card</li><li><span class="mono text-[#7df0ff]">upload</span> → signed bundle on R2</li></ul></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><div class="font-display text-lg text-[#c0c2fb] mb-3 flex items-center gap-2"><i data-lucide="terminal" class="w-5 h-5"></i> Executa (Python, stdio JSON-RPC)</div><ul class="space-y-1.5 text-slate-300"><li>Real <span class="mono text-[#c0c2fb]">git</span> subprocess analysis</li><li>Reverse-RPC <span class="mono text-[#c0c2fb]">sampling/createMessage</span></li><li><span class="mono text-[#c0c2fb]">storage</span> APS KV draft history</li><li>AES-GCM-256 + GPG/SSH clearsign</li></ul></div>
+        </div>
+        <p class="mt-5 text-slate-400 text-sm flex flex-wrap items-center gap-x-2 gap-y-1"><i data-lucide="check" class="w-4 h-4 text-[#7df0ff]"></i> <span class="mono">anna-app validate --strict</span> passes · <i data-lucide="check" class="w-4 h-4 text-[#7df0ff]"></i> boots in <span class="mono">anna-app dev</span> · <i data-lucide="flask-conical" class="w-4 h-4 text-[#c0c2fb]"></i> 107 tests passing.</p>
+      </section>
+
+      <!-- 6 DEMO -->
+      <section class="slide max-w-5xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 06 // Live Demo Highlights</span>
+        <h2 class="font-display text-4xl font-semibold mb-8">What the judges see</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><span class="chip w-9 h-9 rounded-full bg-[#00e5ff]/15 border border-[#00e5ff]/40 text-[#7df0ff] font-bold text-sm mb-2">1</span><div class="font-semibold">Point at a repo</div><div class="text-slate-400 text-sm">Real <span class="mono">git diff</span> against the base branch.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><span class="chip w-9 h-9 rounded-full bg-[#00e5ff]/15 border border-[#00e5ff]/40 text-[#7df0ff] font-bold text-sm mb-2">2</span><div class="font-semibold">PR draft appears</div><div class="text-slate-400 text-sm">Title, summary, rationale, inline comments.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><span class="chip w-9 h-9 rounded-full bg-[#00e5ff]/15 border border-[#00e5ff]/40 text-[#7df0ff] font-bold text-sm mb-2">3</span><div class="font-semibold">Commit cleaner</div><div class="text-slate-400 text-sm">Messy → conventional, side by side.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><span class="chip w-9 h-9 rounded-full bg-[#00e5ff]/15 border border-[#00e5ff]/40 text-[#7df0ff] font-bold text-sm mb-2">4</span><div class="font-semibold">Clearsigned export</div><div class="text-slate-400 text-sm">GPG-signed markdown bundle to R2.</div></div>
+        </div>
+        <p class="mt-5 text-slate-400 text-sm">No Anna account? It also runs <b class="text-slate-200">standalone in a browser</b> with a sample diff.</p>
+      </section>
+
+      <!-- 7 ANNA FIT -->
+      <section class="slide max-w-5xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 07 // Fit with Anna</span>
+        <h2 class="font-display text-4xl font-semibold mb-6">We use the platform, deeply &amp; for real</h2>
+        <div class="flex flex-wrap gap-2 mono text-xs mb-6">
+          <span class="px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30">Executa stdio tools</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30">sampling/createMessage</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30">storage (APS KV)</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#6366f1]/10 border border-[#6366f1]/30">upload → R2</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#6366f1]/10 border border-[#6366f1]/30">chat.append_artifact</span>
+          <span class="px-3 py-1.5 rounded-full bg-slate-400/10 border border-slate-500/30">3-view multi-window</span>
+        </div>
+        <p class="text-slate-300 max-w-3xl">Plus a sandboxed <b class="text-white">Developer Console</b> that exercises the Host-API surface live — routing to the real platform inside Anna, returning clearly-labeled mock responses standalone. <span class="text-[#7df0ff]">Transparent by design.</span></p>
+      </section>
+
+      <!-- 8 MARKET -->
+      <section class="slide max-w-5xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 08 // Who needs this</span>
+        <h2 class="font-display text-4xl font-semibold mb-8">Every developer opens PRs</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="rounded-3xl bg-[#00e5ff]/[0.06] border border-[#00e5ff]/30 p-6"><div class="font-display text-3xl text-[#7df0ff] mb-1">100M+</div><div class="text-slate-300 text-sm">developers — billions of pull requests a year.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><div class="font-display text-3xl mb-1">DevEx</div><div class="text-slate-400 text-sm">PR quality &amp; review speed are core team metrics.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><div class="font-display text-3xl mb-1">Private</div><div class="text-slate-400 text-sm">Enterprises that can't send source diffs to cloud AI.</div></div>
+        </div>
+      </section>
+
+      <!-- 9 EDGE -->
+      <section class="slide max-w-5xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 09 // Competitive Edge</span>
+        <h2 class="font-display text-4xl font-semibold mb-8">Why ShipGhost wins</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-2xl bg-white/[0.03] border border-white/10 p-5 flex gap-4 items-center"><span class="chip w-10 h-10 rounded-lg bg-white/5 border border-white/10 text-[11px] font-bold text-slate-300 shrink-0">VS</span><div><b class="text-white">writing it by hand</b> — seconds, not the dreaded end-of-sprint hour.</div></div>
+          <div class="rounded-2xl bg-white/[0.03] border border-white/10 p-5 flex gap-4 items-center"><span class="chip w-10 h-10 rounded-lg bg-white/5 border border-white/10 text-[11px] font-bold text-slate-300 shrink-0">VS</span><div><b class="text-white">cloud AI tools</b> — AES-GCM-256 diff envelopes + local GPG signing; IP never leaves in plaintext.</div></div>
+          <div class="rounded-2xl bg-white/[0.03] border border-white/10 p-5 flex gap-4 items-center"><span class="chip w-10 h-10 rounded-lg bg-white/5 border border-white/10 text-[11px] font-bold text-slate-300 shrink-0">VS</span><div><b class="text-white">PR templates</b> — it actually <i>reads the diff</i> and explains the architecture impact.</div></div>
+          <div class="rounded-2xl bg-[#00e5ff]/[0.07] border border-[#00e5ff]/30 p-5 flex gap-4 items-center"><span class="chip w-10 h-10 rounded-lg bg-[#00e5ff]/15 border border-[#00e5ff]/40 shrink-0"><i data-lucide="heart" class="w-5 h-5 text-[#7df0ff]"></i></span><div><b class="text-[#7df0ff]">And it's a joy.</b> A cute ghost that does your worst chore — devs <i>want</i> to ship with it.</div></div>
+        </div>
+      </section>
+
+      <!-- 10 ROADMAP -->
+      <section class="slide max-w-5xl w-full flex-col">
+        <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4">Slide 10 // Roadmap</span>
+        <h2 class="font-display text-4xl font-semibold mb-8">30 / 60 / 90</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><div class="mono text-[#5ef2ff] text-xs mb-2">30 DAYS</div><div class="font-semibold mb-1">Git hooks</div><div class="text-slate-400 text-sm">Auto-run ShipGhost on push.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><div class="mono text-[#5ef2ff] text-xs mb-2">60 DAYS</div><div class="font-semibold mb-1">Multi-branch diffs</div><div class="text-slate-400 text-sm">Compare staging ↔ production.</div></div>
+          <div class="rounded-3xl bg-white/[0.03] border border-white/10 p-6"><div class="mono text-[#5ef2ff] text-xs mb-2">90 DAYS</div><div class="font-semibold mb-1">Durable PR archive</div><div class="text-slate-400 text-sm">Browse &amp; re-download every PR (APS Files).</div></div>
+        </div>
+      </section>
+
+      <!-- 11 TEAM -->
+      <section class="slide max-w-5xl w-full flex-col md:flex-row items-center gap-10">
+        <div class="flex-1">
+          <span class="mono text-[11px] tracking-[0.3em] text-[#5ef2ff] uppercase mb-4 block">Slide 11 // Team</span>
+          <h2 class="font-display text-4xl font-semibold mb-6">Built solo, shipped clean</h2>
+          <ul class="space-y-3 text-slate-300">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7df0ff] shrink-0"></i><span><b class="text-white">107</b> plugin tests passing</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7df0ff] shrink-0"></i><span>Real <span class="mono text-[#7df0ff]">git</span> subprocess (no mocks in core)</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7df0ff] shrink-0"></i><span><span class="mono text-[#7df0ff]">anna-app validate --strict</span> green</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="palette" class="w-4 h-4 text-[#c0c2fb] shrink-0"></i><span>Original animated ghost mascot &amp; brand</span></li>
+          </ul>
+        </div>
+        <div class="flex-1 flex justify-center"><img src="icon.svg" class="floaty w-52 h-52" alt=""></div>
+      </section>
+
+      <!-- 12 ASK -->
+      <section class="slide max-w-4xl w-full flex-col items-center text-center">
+        <img src="icon.svg" class="floaty w-40 h-40 mb-6" alt="">
+        <h2 class="font-display text-5xl md:text-6xl font-bold mb-5">Ship it. Let the ghost write.</h2>
+        <p class="text-xl text-slate-300 max-w-xl mb-7">ShipGhost kills PR knowledge debt — securely, joyfully, and natively on Anna.</p>
+        <div class="flex flex-wrap justify-center gap-2 mono text-xs">
+          <span class="px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30">Useful</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30">Working demo</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30">Real AI</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#6366f1]/10 border border-[#6366f1]/30">Native to Anna</span>
+          <span class="px-3 py-1.5 rounded-full bg-[#6366f1]/10 border border-[#6366f1]/30">Delightful</span>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <footer class="h-16 border-t border-white/10 bg-black/40 backdrop-blur-lg flex items-center justify-between px-6 md:px-10 shrink-0">
+    <div class="mono text-[10px] text-slate-500 uppercase tracking-wider">ShipGhost · Anna AI-Native 2026</div>
+    <div class="flex items-center gap-3">
+      <button onclick="prevSlide()" class="px-4 py-1.5 border border-white/15 hover:border-[#00e5ff]/50 rounded-lg text-xs mono text-slate-400 hover:text-[#7df0ff] transition">◀ PREV</button>
+      <span id="slide-num" class="text-xs mono text-[#5ef2ff]">1 / 12</span>
+      <button onclick="nextSlide()" class="px-4 py-1.5 border border-white/15 hover:border-[#00e5ff]/50 rounded-lg text-xs mono text-slate-400 hover:text-[#7df0ff] transition">NEXT ▶</button>
+    </div>
+  </footer>
+
+  <script>
+    let i=0; const s=document.querySelectorAll('.slide'); const n=document.getElementById('slide-num');
+    function upd(){s.forEach((x,k)=>x.classList.toggle('active',k===i));n.textContent=`${i+1} / ${s.length}`;}
+    function nextSlide(){if(i<s.length-1){i++;upd();}}
+    function prevSlide(){if(i>0){i--;upd();}}
+    document.addEventListener('keydown',e=>{if(['ArrowLeft','PageUp'].includes(e.key))prevSlide();if(['ArrowRight','PageDown',' '].includes(e.key))nextSlide();});
+    if(window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
