@@ -34,7 +34,6 @@ _host_active = False
 
 
 def call_host(method, params):
-    global _host_active
     if not _host_active and method == "sampling/createMessage":
         raise ConnectionError(
             "Anna Host connection not active. Direct external API call fallback is disabled."
