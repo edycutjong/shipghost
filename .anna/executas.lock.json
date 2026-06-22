@@ -1,0 +1,11 @@
+{
+  "$schema": "anna-executas-lock/v1",
+  "host": "https://anna.partners",
+  "executas": {
+    "shipghost": {
+      "tool_id": "tool-edycutjong-shipghost-ust65m3h",
+      "path": "./executas/shipghost",
+      "source": "cut"
+    }
+  }
+}

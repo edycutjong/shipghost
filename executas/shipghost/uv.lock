@@ -38,7 +38,7 @@ wheels = [
 ]
 
 [[package]]
-name = "tool-dev-shipghost"
+name = "tool-edycutjong-shipghost-ust65m3h"
 version = "1.2.0"
 source = { editable = "." }
 dependencies = [

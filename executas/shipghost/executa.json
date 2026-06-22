@@ -5,7 +5,7 @@
   "executa_type": "tool",
   "description": "Analyzes local git diffs, generates PR descriptions, conventional commit cleanup, AES-GCM-256 encryption, GPG clearsigning, APS KV PR history persistence, and R2 signed artifact upload.",
 
-  "tool_id": "tool-dev-shipghost",
+  "tool_id": "tool-edycutjong-shipghost-ust65m3h",
   "type": "python",
   "enabled": true,
 
