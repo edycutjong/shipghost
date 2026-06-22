@@ -1,7 +1,7 @@
 {
   "slug": "shipghost",
   "name": "ShipGhost PR Engine",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "executa_type": "tool",
   "description": "Analyzes local git diffs, generates PR descriptions, conventional commit cleanup, AES-GCM-256 encryption, GPG clearsigning, APS KV PR history persistence, and R2 signed artifact upload.",
 
@@ -25,17 +25,17 @@
         "capabilities": ["git.analyze", "pr.ghostwrite", "commits.cleanup", "pr.sign"],
         "binary_urls": {
           "darwin-arm64": {
-            "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.0/tool-edycutjong-shipghost-ust65m3h-darwin-arm64.tar.gz",
+            "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.2/tool-edycutjong-shipghost-ust65m3h-darwin-arm64.tar.gz",
             "size": 9026991,
             "sha256": "e48761ef3c17d69b8f21bbbcacaaa5aaf1155556850ad62a92330475964754b7"
           },
           "darwin-x86_64": {
-            "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.0/tool-edycutjong-shipghost-ust65m3h-darwin-x86_64.tar.gz",
+            "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.2/tool-edycutjong-shipghost-ust65m3h-darwin-x86_64.tar.gz",
             "size": 9746865,
             "sha256": "54f2b92b40e72ecd1df0857902f4427a7e7c1d136abf88f62cbee16849527ae0"
           },
           "linux-x86_64": {
-            "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.0/tool-edycutjong-shipghost-ust65m3h-linux-x86_64.tar.gz",
+            "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.2/tool-edycutjong-shipghost-ust65m3h-linux-x86_64.tar.gz",
             "size": 19190895,
             "sha256": "5be2c3afa5390ab2c9c878ee35ef722b5852d155acf75d00e2c27d0c9e789ffe"
           }
