@@ -26,18 +26,18 @@
         "binary_urls": {
           "darwin-arm64": {
             "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.3/tool-edycutjong-shipghost-ust65m3h-darwin-arm64.tar.gz",
-            "size": 9028661,
-            "sha256": "cae443881fdce0568ebf57b332cb2670c652064d52a7fb3b7f51e162f60811ec"
+            "size": 9028641,
+            "sha256": "9436c54c04c660402b890977def19a47e0a782f0856025955cee73d0e4c5f6f3"
           },
           "darwin-x86_64": {
             "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.3/tool-edycutjong-shipghost-ust65m3h-darwin-x86_64.tar.gz",
-            "size": 9743542,
-            "sha256": "0f7a4f9b3474162a8ca8ba5ef28f5c198565f9bfd51624bc6a7943376ac05ffb"
+            "size": 9746799,
+            "sha256": "0344d68442b74887f73c1aa798f478153d6695cc9a42feecb6bf710c0544a31b"
           },
           "linux-x86_64": {
             "url": "https://github.com/edycutjong/shipghost/releases/download/v1.2.3/tool-edycutjong-shipghost-ust65m3h-linux-x86_64.tar.gz",
-            "size": 19191672,
-            "sha256": "263c94e61076b7d4d2ad50628fab279dca1a95b7c1c69033261ea54a0c75a758"
+            "size": 19191413,
+            "sha256": "4a61c0f4649b06775e38ddc364479aaa9189367f527f51b37bd465bf43eab6a7"
           }
         }
       }
