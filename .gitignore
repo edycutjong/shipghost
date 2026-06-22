@@ -72,3 +72,6 @@ node_modules/
 
 docs/assets
 shipghost_demo.mp4
+
+# Build output
+dist-anna/

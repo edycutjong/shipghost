@@ -1,7 +1,7 @@
 {
   "slug": "shipghost",
   "name": "ShipGhost PR Engine",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "executa_type": "tool",
   "description": "Analyzes local git diffs, generates PR descriptions, conventional commit cleanup, AES-GCM-256 encryption, GPG clearsigning, APS KV PR history persistence, and R2 signed artifact upload.",
 
@@ -12,10 +12,15 @@
   "host_capabilities": ["aps.kv", "host.upload"],
 
   "distribution": {
-    "active": "local",
+    "active": "binary",
     "profiles": {
       "local": {
         "type": "local",
+        "supports_protocol": true,
+        "capabilities": ["git.analyze", "pr.ghostwrite", "commits.cleanup", "pr.sign"]
+      },
+      "binary": {
+        "type": "binary",
         "supports_protocol": true,
         "capabilities": ["git.analyze", "pr.ghostwrite", "commits.cleanup", "pr.sign"]
       }
