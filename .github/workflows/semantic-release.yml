@@ -1,0 +1,63 @@
+name: Semantic Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Run CI & Release
+    runs-on: ubuntu-latest
+    steps:
+      # ── STAGE 1: Checkout & Environment Setup ─────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for semantic-release to find previous tags
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: "executas/shipghost/pyproject.toml"
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      # ── STAGE 2: Install Python Dependencies & Run Tests ──────
+      - name: Install python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pytest pytest-cov pycryptodome flake8 black
+          pip install -e executas/shipghost
+
+      - name: Format check (Black)
+        run: black --check executas/shipghost/plugin.py
+
+      - name: Lint check (Flake8)
+        run: flake8 executas/shipghost/plugin.py --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Run unit tests
+        run: pytest tests/ -v --cov=executas/shipghost --cov-report=xml
+
+      - name: Verify offline execution script
+        run: python scripts/verify_offline.py
+
+      # ── STAGE 3: Semantic Release Bumping ────────────────────
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

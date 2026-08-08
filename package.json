@@ -9,6 +9,50 @@
     "test": "uv run --project executas/shipghost --with pytest python -m pytest tests/ -q"
   },
   "devDependencies": {
-    "@anna-ai/cli": "latest"
+    "@anna-ai/cli": "latest",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.1",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.0",
+    "semantic-release": "^24.0.0"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "node scripts/bump-executa.js ${nextRelease.version}"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "package-lock.json",
+            "app.json",
+            "executas/shipghost/executa.json",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
   }
 }
